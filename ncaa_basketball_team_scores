@@ -1,0 +1,32 @@
+import csv
+
+# Set weights for each factor
+win_pct_weight = 0.4
+fg_pct_weight = 0.15
+three_pt_pct_weight = 0.1
+free_throw_pct_weight = 0.1
+rebounds_weight = 0.15
+assists_weight = 0.1
+
+# Read in the data from the CSV file
+with open('march_madness.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for col in reader:
+        # Extract the relevant data from the row
+        win_pct = float(col['Win Pct'])
+        fg_pct = float(col['FG Pct'])
+        three_pt_pct = float(col['3PT Pct'])
+        free_throw_pct = float(col['FT Pct'])
+        rebounds_per_game = float(col['Rebounds Per Game'])
+        assists_per_game = float(col['Assists Per Game'])
+        
+        # Calculate the weighted score
+        weighted_score = (win_pct * win_pct_weight) + \
+                         (fg_pct * fg_pct_weight) + \
+                         (three_pt_pct * three_pt_pct_weight) + \
+                         (free_throw_pct * free_throw_pct_weight) + \
+                         (rebounds_per_game * rebounds_weight) + \
+                         (assists_per_game * assists_weight)
+
+        # Print the team name and weighted score
+        print(f"{col['Team Name']}: {weighted_score}")
